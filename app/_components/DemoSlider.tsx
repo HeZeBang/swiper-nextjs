@@ -16,7 +16,8 @@ import SliderButtons from "./SliderButtons";
 import { Globe } from "@/components/magicui/globe";
 import Universe from "@/components/magicui/universe";
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 
 interface Slide {
   id: number;
@@ -39,6 +40,9 @@ interface DemoSliderProps {
 
 const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
   const [swiperInstance, setSwiperInstance] = React.useState<SwiperClass | null>(null);
+  const nextBtn = React.useRef<HTMLDivElement>(null);
+  const prevBtn = React.useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = React.useState(0);
 
   useEffect(() => {
     if (swiperInstance) {
@@ -50,6 +54,15 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
       });
     }
   }, [swiperInstance])
+
+  useEffect(() => {
+    if (swiperInstance) {
+      setCurrentSlide(swiperInstance.activeIndex);
+      swiperInstance.on('slideChange', () => {
+        setCurrentSlide(swiperInstance.activeIndex);
+      });
+    }
+  }, [swiperInstance]);
 
   // const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
   //   console.log("Key pressed:", event.key);
@@ -71,6 +84,8 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
             tabIndex={0}
             navigation={{
               enabled: true,
+              nextEl: nextBtn.current,
+              prevEl: prevBtn.current
             }}
             pagination={{ type: "progressbar", clickable: true }}
             keyboard={{ enabled: true, }}
@@ -81,6 +96,16 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
             hashNavigation={true}
             modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation]}
           >
+            <div className="absolute right-5 bottom-5 z-10 rounded-full bg-[#f0f0f0aa] backdrop:blur-md p-2 flex items-center gap-2 border-outline border backdrop-blur-xl backdrop-saturate-200">
+              <div ref={prevBtn} className="cursor-pointer" onClick={() => swiperInstance?.slidePrev()}>
+                <ChevronLeft className="aspect-square w-8 h-8 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
+              </div>
+              {/* <span>{currentSlide}</span> */}
+              <AnimatedCounter value={currentSlide || 0} className="bg-[#f0f0f0aa]" />
+              <div ref={nextBtn} className="cursor-pointer" onClick={() => swiperInstance?.slideNext()}>
+                <ChevronRight className="aspect-square w-8 h-8 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
+              </div>
+            </div>
             <SwiperSlide key="cover" data-hash="cover" className="bg-white p-24 overflow-hidden">
               <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
