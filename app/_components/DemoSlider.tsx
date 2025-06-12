@@ -3,14 +3,19 @@
 import React from "react";
 
 // Swiper components, modules and styles
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, Keyboard, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import slides from "@/app/slides/demo";
+
 // Our custom button component
 import SliderButtons from "./SliderButtons";
+import { Globe } from "@/components/magicui/globe";
+import Universe from "@/components/magicui/universe";
+import { cn } from "@/lib/utils";
 
 interface Slide {
   id: number;
@@ -38,13 +43,34 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
         <ul className="h-full w-full">
           <Swiper
             navigation
-            pagination={{ type: "bullets", clickable: true }}
-            autoplay={true}
-            loop={true}
-            modules={[Autoplay, Navigation, Pagination]}
+            pagination={{ type: "progressbar", clickable: true }}
+            keyboard={{ enabled: true, }}
+            effect="cards"
+            speed={500}
+            autoplay={false}
+            loop={false}
+            hashNavigation={true}
+            modules={[Autoplay, Navigation, Pagination, Keyboard, EffectCards, HashNavigation]}
           >
-            {data.map(({ id, image, tagline, title, buttons }) => (
-              <SwiperSlide key={id}>
+            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-24 overflow-hidden">
+              <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
+                <h1 className="text-7xl font-extrabold z-20">
+                  Fullstack 101
+                </h1>
+                <span className="text-3xl">A Coffee With Pie</span>
+              </div>
+              <Universe />
+            </SwiperSlide>
+            {
+              slides.map((slide, index) => (
+                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-24 overflow-scroll")}>
+                  <h2 className="text-5xl font-bold mb-4 sticky">{slide.title}</h2>
+                  {slide.content}
+                </SwiperSlide>
+              ))
+            }
+            {/* {data.map(({ id, image, tagline, title, buttons }) => (
+              <SwiperSlide key={id} data-hash={id}>
                 <div
                   className="h-full w-full absolute left-0 top-0"
                   style={{
@@ -70,7 +96,7 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
                   </div>
                 </div>
               </SwiperSlide>
-            ))}
+            ))} */}
           </Swiper>
         </ul>
       </div>
