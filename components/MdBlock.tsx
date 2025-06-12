@@ -1,11 +1,13 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-function MDBlock(props: {content: string}) {
+function MDBlock(props: { children: string }) {
     return (
-        <Markdown remarkPlugins={[remarkGfm]}>
-            {props.content}
-        </Markdown>
+        <div className="prose">
+            <Markdown remarkPlugins={[remarkGfm]}>
+                {props.children}
+            </Markdown>
+        </div>
     )
 }
 
