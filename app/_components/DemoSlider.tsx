@@ -98,15 +98,15 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
           >
             <div className="absolute right-5 bottom-5 z-10 rounded-full bg-[#f0f0f0aa] backdrop:blur-md p-2 flex items-center gap-2 border-outline border backdrop-blur-xl backdrop-saturate-200">
               <div ref={prevBtn} className="cursor-pointer" onClick={() => swiperInstance?.slidePrev()}>
-                <ChevronLeft className="aspect-square w-8 h-8 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
+                <ChevronLeft className="aspect-square w-7 h-7 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
               </div>
               {/* <span>{currentSlide}</span> */}
               <AnimatedCounter value={currentSlide || 0} className="bg-[#f0f0f0aa]" />
               <div ref={nextBtn} className="cursor-pointer" onClick={() => swiperInstance?.slideNext()}>
-                <ChevronRight className="aspect-square w-8 h-8 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
+                <ChevronRight className="aspect-square w-7 h-7 rounded-full p-1 border hover:bg-white active:scale-95 transition-all"/>
               </div>
             </div>
-            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-24 overflow-hidden">
+            <SwiperSlide key="cover" data-hash="cover" className="bg-white p-14 overflow-hidden">
               <div className="items-start justify-center flex w-full h-full gap-5 flex-col">
                 <h1 className="text-7xl font-extrabold z-20">
                   Fullstack 101
@@ -117,8 +117,8 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
             </SwiperSlide>
             {
               slides.map((slide, index) => (
-                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-24 overflow-scroll")}>
-                  <h2 className="text-5xl font-bold mb-4 sticky">{slide.title}</h2>
+                <SwiperSlide key={index} data-hash={`slide-${index}`} className={cn("bg-white p-14 overflow-auto")}>
+                  <h2 className="text-4xl font-bold mb-4 sticky">{slide.title}</h2>
                   {slide.content}
                 </SwiperSlide>
               ))
