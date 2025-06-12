@@ -1,6 +1,7 @@
 import MDBlock from "@/components/MdBlock";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { Chrome, CodeXml, Database, Globe, Rocket } from "lucide-react";
+import { SlideT } from "../types/Slides";
 
 const timelineData = [
   {
@@ -78,10 +79,10 @@ const slides = [
 - 拥抱 **“魔法”** ：比起深入理解每个细节和原理，先学会使用工具和框架。
 - **AI** Powered: 我们的课程将会极大程度的鼓励使用 AI 工具来辅助学习和开发。
 - **前沿**赋能：我们将使用 Next.js、Supabase、Vercel 等业界前沿技术栈而非传统的 SpringBoot, PHP 等技术栈。
-- **实践**为王：我们将通过实际项目/作业来学习和应用所学知识。
+- **实践**为王：我们将通过实际项目/课后练习来学习和应用所学知识。
 `}</MDBlock>
         </>)
   }
-]
+] as SlideT[];
 
 export default slides;
