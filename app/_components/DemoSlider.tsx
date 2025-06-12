@@ -1,10 +1,10 @@
 "use client"; // <===== REQUIRED
 
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
 // Swiper components, modules and styles
 import { Autoplay, EffectCards, EffectCoverflow, HashNavigation, Keyboard, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,6 +16,7 @@ import SliderButtons from "./SliderButtons";
 import { Globe } from "@/components/magicui/globe";
 import Universe from "@/components/magicui/universe";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
 
 interface Slide {
   id: number;
@@ -37,12 +38,40 @@ interface DemoSliderProps {
 }
 
 const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
+  const [swiperInstance, setSwiperInstance] = React.useState<SwiperClass | null>(null);
+
+  useEffect(() => {
+    if (swiperInstance) {
+      swiperInstance.on('keyPress', (swiper, key) => {
+        console.log("Key pressed:", key, typeof key);
+        if (Number(key) === 32) {
+          swiper.slideNext(); // Slide to the next slide
+        }
+      });
+    }
+  }, [swiperInstance])
+
+  // const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+  //   console.log("Key pressed:", event.key);
+  //   if (event.key === "Space") {
+  //     event.preventDefault(); // Prevent default spacebar scroll behavior
+  //     if (swiperInstance) {
+  //       swiperInstance.slideNext(); // Slide to the next slide
+  //     }
+  //   }
+  // }, [swiperInstance]);
+
   return (
     <section className="w-full">
       <div className=" h-screen">
         <ul className="h-full w-full">
           <Swiper
-            navigation
+            onSwiper={setSwiperInstance}
+            // onKeyDown={handleKeyDown}
+            tabIndex={0}
+            navigation={{
+              enabled: true,
+            }}
             pagination={{ type: "progressbar", clickable: true }}
             keyboard={{ enabled: true, }}
             effect="cards"

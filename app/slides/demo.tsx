@@ -48,7 +48,7 @@ const timelineData = [
     },
     {
         id: 5,
-        title: "Release",
+        title: "Release & DevOps",
         date: "May 2024",
         content: "Final deployment and release. Using Vercel for hosting.",
         category: "Release",
